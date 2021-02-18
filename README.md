@@ -4,7 +4,7 @@ EE Discord Rich Presence is a Windows Library (.dll) that allows you to display 
 
 ## Installation
 
-Download `EEDiscordRichPresence.dll` and `discord_game_sdk.dll` ([here](https://github.com/EE-modders/EE-Discord-Rich-Presence/releases/latest)) and place them in the main directory of the game.
+Download [EEDiscordRichPresence.dll](https://github.com/EE-modders/EE-Discord-Rich-Presence/releases/latest) and [discord_game_sdk.dll](https://discord.com/developers/docs/game-sdk/sdk-starter-guide) and place them in the main directory of the game.
 
 ## Build
 
