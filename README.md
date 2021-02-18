@@ -1,2 +1,20 @@
-# EE-Discord-Rich-Presence
-EE-DiscordRichPresence
+# EE Discord Rich Presence
+
+EE Discord Rich Presence is a Windows Library (.dll) that allows you to display a Discord status when you play Empire Earth.
+
+## Installation
+
+Download `EEDiscordRichPresence.dll` and `discord_game_sdk.dll` ([here](https://github.com/EE-modders/EE-Discord-Rich-Presence/releases/latest)) and place them in the main directory of the game.
+
+## Build
+
+Open EEDiscordRichPresence.sln, select 'Release' and 'Win32', and finally build EEDiscordRichPresence.
+
+## ❤️ Credits
+[MonaLisa](https://github.com/HerMajestyDrMona)
+
+## Contributing
+Pull requests are welcome.
+
+## License
+[GNU General Public License v3.0](https://github.com/EnergyCube/CS_DllMain/blob/main/LICENSE)
