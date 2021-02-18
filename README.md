@@ -8,10 +8,12 @@ Download `EEDiscordRichPresence.dll` and `discord_game_sdk.dll` ([here](https://
 
 ## Build
 
+Download and extract [discord_game_sdk.zip](https://discord.com/developers/docs/game-sdk/sdk-starter-guide) content in `EEDiscordRichPresence\discord_game_sdk`.
+
 Open EEDiscordRichPresence.sln, select 'Release' and 'Win32', and finally build EEDiscordRichPresence.
 
 ## ❤️ Credits
-[MonaLisa](https://github.com/HerMajestyDrMona)
+[Dr.MonaLisa](https://github.com/HerMajestyDrMona)
 
 ## Contributing
 Pull requests are welcome.
