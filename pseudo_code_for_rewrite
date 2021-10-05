@@ -1,0 +1,41 @@
+/* Discord Main Info */
+bool discord_installed = false;
+string discord_ee_id = "ID";
+string discord_aoc_id = "ID";
+
+/* Discord Clock Info */
+int refresh_status = 2000;
+int check_foreground = 5000;
+
+/* Discord Display */
+string status_playing = "Playing";
+string status_minimized = "Minimized";
+string status_neoee = " (NeoEE)";
+
+/* EE & AoC Related Globals */
+bool IsGameForeground = false;
+
+/* Important fonctions */
+bool fileExist(string path);
+bool isProcessRunning(int pid);
+bool isProcessRunning(string name);
+bool IsForegroundProcess(int pid);
+
+[clock]
+update IsGameForeground
+sleep 5s
+
+[clock]
+IsWindows7OrGreater() => Discord min
+Check discord_game_sdk.dll exist
+Check discord_installed & discord_ee_id / discord_aoc_id
+isProcessRunning("discord")
+Init Discord stuff
+Set discord info
+
+[thread]
+check ee or aoc from current exe name
+check neoee from neoee.dll
+start thread with previous clocks
+
+// Note to myself: avoid reading Mona's code in the future to preserve my sanity.
