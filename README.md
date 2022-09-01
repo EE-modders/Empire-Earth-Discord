@@ -1,22 +1,22 @@
-# EE Discord Rich Presence
+![Visitor count](https://shields-io-visitor-counter.herokuapp.com/badge?page=EE-modders.Empire-Earth-Discord)
+[![Stars](https://img.shields.io/github/stars/EE-modders/Empire-Earth-Discord)](https://github.com/EE-modders/Empire-Earth-Discord/stargazers)
+[![Forks](https://img.shields.io/github/forks/EE-modders/Empire-Earth-Discord)](https://github.com/EE-modders/Empire-Earth-Discord/network)
+[![Release](https://img.shields.io/github/v/release/EE-modders/Empire-Earth-Discord?label=last%20release%20)](https://github.com/EE-modders/Empire-Earth-Discord/releases/latest)
+[![License](https://img.shields.io/github/license/EE-modders/Empire-Earth-Discord?color=brightgreen)](https://github.com/EE-modders/Empire-Earth-Discord/blob/master/LICENSE)
+# 🕹️ Empire Earth Discord
+A simple DLL, to show your Empire Earth activity on Discord :> \
+By [EnergyCube](https://github.com/EnergyCube) for the Empire Earth Community.
 
-EE Discord Rich Presence is a Windows Library (.dll) that allows you to display a Discord status when you play Empire Earth.
+## 🧾 How to install ?
+Download `EEDiscord.dll` [here](https://github.com/EE-modders/Empire-Earth-Discord/releases/latest) and place it in your game directory (next to `Empire Earth.exe` and/or `EE-AOC.exe`) \
+Then download the [Discord Game SDK](https://discord.com/developers/docs/game-sdk/sdk-starter-guide) and copy the file `discord_game_sdk.dll` (zip path: `lib\x86\`) in the same folder where you placed `EEDiscord.dll`.
 
-## Installation
+## 🔨 Build
+Download the [Discord Game SDK](https://discord.com/developers/docs/game-sdk/sdk-starter-guide) and place all files from `cpp\` in the `discord-files` folder of the project. \
+Then place `discord_game_sdk.dll` and `discord_game_sdk.dll.lib` in `discord-files\lib\x86` (and optionally same things for x86_64) and if everything is good, you should be able to build!
 
-Download [EEDiscordRichPresence.dll](https://github.com/EE-modders/EE-Discord-Rich-Presence/releases/latest) and [discord_game_sdk.dll](https://discord.com/developers/docs/game-sdk/sdk-starter-guide) and place them in the main directory of the game.
+# ❤️ Credit
+[Dr.MonaLisa](https://github.com/HerMajestyDrMona): For help to setup Discord Game SDK
 
-## Build
-
-Download and extract [discord_game_sdk.zip](https://discord.com/developers/docs/game-sdk/sdk-starter-guide) content in `EEDiscordRichPresence\discord_game_sdk`.
-
-Open EEDiscordRichPresence.sln, select 'Release' and 'Win32', and finally build EEDiscordRichPresence.
-
-## ❤️ Credits
-[Dr.MonaLisa](https://github.com/HerMajestyDrMona)
-
-## Contributing
-Pull requests are welcome.
-
-## License
-[GNU General Public License v3.0](https://github.com/EnergyCube/CS_DllMain/blob/main/LICENSE)
+## 📖 License
+[GNU General Public License v3.0](https://github.com/EE-modders/Empire-Earth-Discord/blob/master/LICENSE)
