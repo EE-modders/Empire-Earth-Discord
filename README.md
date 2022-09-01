@@ -8,9 +8,9 @@ A simple DLL, to show your Empire Earth activity on Discord :> \
 By [EnergyCube](https://github.com/EnergyCube) for the Empire Earth Community.
 
 ## 💡 Features
-⏰ Time played
-🔍 Detect EE or EE:AoC
-💻 [EE Only] Shows detailed activity (Menu/In Game/etc...)
+⏰ Time played \
+🔍 Detect EE or EE:AoC \ 
+💻 [EE Only] Shows detailed activity (Menu/In Game/etc...) \
 💤 Shows if you are AFK
 
 ## 🧾 How to install ?
