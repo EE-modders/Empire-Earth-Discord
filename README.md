@@ -9,7 +9,7 @@ By [EnergyCube](https://github.com/EnergyCube) for the Empire Earth Community.
 
 ## 💡 Features
 ⏰ Time played \
-🔍 Detect EE or EE:AoC \ 
+🔍 Detect EE or EE:AoC <br> 
 💻 [EE Only] Shows detailed activity (Menu/In Game/etc...) \
 💤 Shows if you are AFK
 
