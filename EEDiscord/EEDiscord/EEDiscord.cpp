@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "EEDiscord.h"
 
+#include <cstdio>
+#include <windows.h>
+#include <tlhelp32.h>
+
 void EEDiscord::printCredit()
 {
     Logger::showMessage("------------------------------------------------------");
@@ -13,15 +17,96 @@ void EEDiscord::printCredit()
     Logger::showMessage("------------------------------------------------------");
 }
 
+bool IsProcessRunning(const wchar_t* processName)
+{
+    bool exists = false;
+    PROCESSENTRY32 entry;
+    entry.dwSize = sizeof(PROCESSENTRY32);
+
+    HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
+
+    if (Process32First(snapshot, &entry)) {
+        while (Process32Next(snapshot, &entry)) {
+            if (!_wcsicmp(entry.szExeFile, processName)) {
+                exists = true;
+                break;
+            }
+        }
+    }
+
+    CloseHandle(snapshot);
+    return exists;
+}
+
+std::string buildDetailString(GameQuery gq)
+{
+    std::stringstream ss;
+    ss << "";
+
+    if (gq.getProductType() != GameQuery::PT_EE || !gq.isSupportedVersion()) {
+        // Nothing for the moment :<
+    }
+    else {
+        if (gq.isPlaying())
+            ss << "As \"" << gq.getUsername() << "\"";
+    }
+    return ss.str();
+}
+
+
+std::string buildStateString(GameQuery gq)
+{
+    std::stringstream ss;
+    ss << "";
+
+    if (gq.getProductType() != GameQuery::PT_EE || !gq.isSupportedVersion()) {
+        ss << "Playing";
+    }
+    else {
+
+        if (!gq.isLoaded()) {
+            ss << "Loading...";
+            return ss.str();
+        }
+
+        switch (gq.getCurrentScreen())
+        {
+            case GameQuery::ST_Menu:
+                ss << "In Menu";
+                break;
+            case GameQuery::ST_Lobby:
+                ss << "In Lobby";
+                break;
+            case GameQuery::ST_PlayingSolo:
+                ss << "Singleplayer";
+                break;
+            case GameQuery::ST_PlayingOnline:
+                ss << "Multiplayer";
+                break;
+            case GameQuery::ST_Unknown:
+            default:
+                break;
+        }
+    }
+
+    if (gq.isMinimized() && gq.isNeoEE())
+        ss << " (NeoEE Minimized)";
+    else if (gq.isNeoEE())
+        ss << " (NeoEE)";
+    else if (gq.isMinimized())
+        ss << " (Minimized)";
+
+    return ss.str();
+}
+
 void EEDiscord::updatePresenceThread()
 {
     Logger::showMessage("Enter Presence Thread...", "EEDiscord");
 
     auto lastActive = std::chrono::high_resolution_clock::now();
 
-    while (true) {
+    while (!_stop) {
         _mtx.lock();
-
 
         if (_gq->getProductType() == GameQuery::PT_EE) {
             _activity.GetAssets().SetLargeImage("logo");
@@ -33,33 +118,10 @@ void EEDiscord::updatePresenceThread()
             _activity.GetAssets().SetLargeText("Empire Earth: The Art of Conquest");
         }
 
-        if (_gq->getProductType() == GameQuery::PT_EE) { // Yeah I only have EE :|
-            std::stringstream ss;
-            switch (_gq->getCurrentScreen())
-            {
-                case GameQuery::ST_Menu:
-                    _activity.SetState("In Menu");
-                    break;
-                case GameQuery::ST_Lobby:
-                    _activity.SetState("In Lobby");
-                    break;
-                case GameQuery::ST_PlayingSolo:
-                    _activity.SetState("Playing Solo");
-                    ss << "As \"" << _gq->getUsername() << "\"";
-                    _activity.SetDetails(ss.str().c_str());
-                    break;
-                case GameQuery::ST_PlayingOnline:
-                    _activity.SetState("Playing Online");
-                    ss << "As \"" << _gq->getUsername() << "\"";
-                    _activity.SetDetails(ss.str().c_str());
-                    break;
-                case GameQuery::ST_Unknown:
-                default:
-                    _activity.SetState("");
-                    break;
-            }
-        }
+        _activity.SetDetails(buildDetailString(*_gq).c_str());
+        _activity.SetState(buildStateString(*_gq).c_str());
 
+        // AFK Management
         if (_gq->isMinimized()) {
             auto current = std::chrono::high_resolution_clock::now();
             auto minElapsed = std::chrono::duration_cast<std::chrono::minutes>(current - lastActive);
@@ -89,7 +151,7 @@ void EEDiscord::updatePresenceThread()
 void EEDiscord::updateCallbackThread()
 {
     Logger::showMessage("Enter Callback Thread...", "EEDiscord");
-    while (true) {
+    while (!_stop) {
         _mtx.lock();
         _state.core->RunCallbacks();
         _mtx.unlock();
@@ -101,11 +163,21 @@ void EEDiscord::onStart()
 {
     printCredit();
 
+    if (!doesFileExist(L"discord_game_sdk.dll")) {
+        Logger::showMessage("discord_game_sdk.dll missing!", "EEDiscord", true);
+        return;
+    }
+
+    while (!IsProcessRunning(L"Discord.exe") || !IsProcessRunning(L"discord.exe")) {
+        Logger::showMessage("Discord not running...", "EEDiscord");
+        Sleep(10000);
+    }
+
     discord::Result result;
     if (_gq->getProductType() == GameQuery::PT_EE)
-        result = discord::Core::Create(782679873856077914, DiscordCreateFlags_NoRequireDiscord, &_core);
+        result = discord::Core::Create(782679873856077914, DiscordCreateFlags_Default, &_core);
     else if (_gq->getProductType() == GameQuery::PT_AoC)
-        result = discord::Core::Create(783353615670706217, DiscordCreateFlags_NoRequireDiscord, &_core);
+        result = discord::Core::Create(783353615670706217, DiscordCreateFlags_Default, &_core);
     else {
         Logger::showMessage("Unable to identify game product! Did you renamed the executable? Exiting...", "EEDiscord", true);
         return;
@@ -143,4 +215,7 @@ void EEDiscord::onStart()
 
 void EEDiscord::onStop()
 {
+    _mtx.lock();
+    _stop = true;
+    _mtx.unlock();
 }

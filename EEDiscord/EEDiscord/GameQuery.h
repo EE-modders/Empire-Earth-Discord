@@ -31,6 +31,8 @@ public:
 
 	bool isMinimized(); // WARNING: The debug console is also considered as the game Window
 
+	bool isNeoEE();
+
 	const char* getUsername();
 
 	ScreenType getCurrentScreen();
@@ -44,5 +46,6 @@ public:
 private:
 	std::string _game_path;
 	ProductType _productType;
+	bool _neoee;
 
 };

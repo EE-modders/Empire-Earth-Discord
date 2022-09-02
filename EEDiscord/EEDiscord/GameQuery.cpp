@@ -17,6 +17,8 @@ GameQuery::GameQuery()
         _productType = PT_EE;
     else if (exeFileName.compare(L"EE-AOC.EXE") == 0)
         _productType = PT_AoC;
+
+    _neoee = doesFileExist(L"neoee.dll");
 };
 
 bool GameQuery::isLoaded() {
@@ -45,6 +47,11 @@ bool GameQuery::isMinimized()
 
     return (foregroundPid != GetCurrentProcessId());
     return false;
+}
+
+bool GameQuery::isNeoEE()
+{
+    return _neoee;
 }
 
 const char* GameQuery::getUsername()

@@ -11,10 +11,10 @@
 // Project INFO
 static const std::string PROJECT_NAME_STR = "EEDiscord";
 static const std::string PROJECT_AUTHOR_STR = "EnergyCube";
-static const std::string PROJECT_VERSION_STR = "1.1.0";
+static const std::string PROJECT_VERSION_STR = "1.1.1";
 static const unsigned int PROJECT_VERSION_MAJOR = 1;
 static const unsigned int PROJECT_VERSION_MINOR = 1;
-static const unsigned int PROJECT_VERSION_PATCH = 0;
+static const unsigned int PROJECT_VERSION_PATCH = 1;
 // END Project INFO
 
 // Hard Coded Project Settings
@@ -47,5 +47,6 @@ private:
 	discord::Activity _activity{};
 
 	std::mutex _mtx;
+	bool _stop = false;
 };
 
