@@ -18,9 +18,9 @@
 */
 
 
-static const std::string TEMPLATE_VERSION_STR = "1.0.1";
+static const std::string TEMPLATE_VERSION_STR = "1.1.1";
 static const unsigned int TEMPLATE_VERSION_MAJOR = 1;
-static const unsigned int TEMPLATE_VERSION_MINOR = 0;
+static const unsigned int TEMPLATE_VERSION_MINOR = 1;
 static const unsigned int TEMPLATE_VERSION_PATCH = 1;
 
 class Library
